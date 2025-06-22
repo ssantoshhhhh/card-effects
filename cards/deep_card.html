@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Styled Machine Learning Cards</title>
+  <style>
+    body {
+      background-color: #0d0d1a;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2rem;
+      padding: 2rem;
+      margin: 0;
+    }
+
+    .card {
+      width: 400px;
+      background-color: #1a1a2e;
+      border-radius: 20px;
+      padding: 30px 20px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      position: relative;
+      overflow: hidden;
+      perspective: 1000px;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, #00ffff, #ff00ff, #ffff00);
+      opacity: 0.3;
+      filter: blur(40px);
+      animation: pulse 10s infinite;
+      z-index: -1;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        transform: scale(1);
+        opacity: 0.3;
+      }
+      50% {
+        transform: scale(1.05);
+        opacity: 0.4;
+      }
+    }
+
+    h1 {
+      color: #fff;
+      font-size: 2em;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      margin-bottom: 10px;
+    }
+
+    .btn {
+      padding: 8px 16px;
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,0.2);
+      background-color: rgba(255,255,255,0.05);
+      color: #fff;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 0.9em;
+      transition: all 0.2s ease;
+    }
+
+    .btn:hover {
+      background-color: rgba(255,255,255,0.2);
+      box-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff inset;
+      border-color: #00ffff;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- First Card -->
+  <div class="card">
+    <h1>Machine Learning</h1>
+    <div class="buttons">
+      <div class="btn">Python</div>
+      <div class="btn">Tensorflow</div>
+      <div class="btn">Keras</div>
+      <div class="btn">Jupyter</div>
+      <div class="btn">Google Colab</div>
+      <div class="btn">Scikit Learn</div>
+    </div>
+  </div>
+
+  <!-- Second Card -->
+  <div class="card">
+    <h1>Deep Learning</h1>
+    <div class="buttons">
+      <div class="btn">PyTorch</div>
+      <div class="btn">Keras</div>
+      <div class="btn">CNN</div>
+      <div class="btn">RNN</div>
+      <div class="btn">AutoEncoders</div>
+      <div class="btn">OpenCV</div>
+    </div>
+  </div>
+
+  
+
+  <script>
+    // Apply tilt to all cards
+    const cards = document.querySelectorAll('.card');
+
+    cards.forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const deltaX = x - centerX;
+        const deltaY = y - centerY;
+        const maxTilt = 15;
+
+        const rotateY = (deltaX / centerX) * maxTilt;
+        const rotateX = -(deltaY / centerY) * maxTilt;
+
+        card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+      });
+
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = `rotateX(0deg) rotateY(0deg)`;
+      });
+    });
+  </script>
+
+</body>
+</html>
