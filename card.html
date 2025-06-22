@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Cursor-Following Tilt Cards</title>
+<style>
+  body {
+    background-color: #c4c4ce;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 40px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+  }
+
+  .card {
+    width: 320px;
+    background: linear-gradient(135deg, #1a1a2e, #0d0d1a);
+    border-radius: 20px;
+    padding: 30px 20px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    transition: box-shadow 0.3s ease, transform 0.1s ease;
+    transform-style: preserve-3d;
+    cursor: pointer;
+    perspective: 1000px;
+  }
+
+  /* Remove default hover tilt to rely solely on cursor movement */
+  /* Optional visual enhancement for hover */
+  /* .card:hover { box-shadow: ... } */
+
+  /* Skills labels styling */
+  .card h2 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    text-align: center;
+    color: #ccc;
+    font-size: 1.8em;
+  }
+
+  .skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+  }
+
+  .skill {
+    background-color: #333;
+    padding: 8px 14px;
+    border-radius: 12px;
+    font-size: 0.9em;
+    color: #fff;
+    font-weight: 600;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.4);
+    transition: background-color 0.2s, transform 0.2s;
+  }
+
+  .skill:hover {
+    background-color: #555;
+    transform: scale(1.05);
+  }
+</style>
+</head>
+<body>
+
+<!-- Frontend Card -->
+<div class="card" id="frontend-card">
+  <h2>Frontend</h2>
+  <div class="skills">
+    <div class="skill" title="React Js">React Js</div>
+    <div class="skill" title="Redux">Redux</div>
+    <div class="skill" title="Next Js">Next Js</div>
+    <div class="skill" title="Angular Js">Angular Js</div>
+    <div class="skill" title="HTML">HTML</div>
+    <div class="skill" title="CSS">CSS</div>
+    <div class="skill" title="JavaScript">JavaScript</div>
+    <div class="skill" title="Bootstrap">Bootstrap</div>
+    <div class="skill" title="Material UI">Material UI</div>
+    <div class="skill" title="Flutter">Flutter</div>
+  </div>
+</div>
+
+<!-- Backend Card -->
+<div class="card" id="backend-card">
+  <h2>Backend</h2>
+  <div class="skills">
+    <div class="skill" title="Node Js">Node Js</div>
+    <div class="skill" title="Express Js">Express Js</div>
+    <div class="skill" title="Graph QL">Graph QL</div>
+    <div class="skill" title="Python">Python</div>
+    <div class="skill" title="Flask">Flask</div>
+    <div class="skill" title="Django">Django</div>
+    <div class="skill" title="MySQL">MySQL</div>
+    <div class="skill" title="PostgreSQL">PostgreSQL</div>
+    <div class="skill" title="MongoDB">MongoDB</div>
+    <div class="skill" title="Firebase">Firebase</div>
+  </div>
+</div>
+
+<!-- DevOps Card -->
+<div class="card" id="devops-card">
+  <h2>DevOps</h2>
+  <div class="skills">
+    <div class="skill" title="AWS">AWS</div>
+    <div class="skill" title="Google Cloud">Google Cloud</div>
+    <div class="skill" title="Docker">Docker</div>
+    <div class="skill" title="Jenkins">Jenkins</div>
+    <div class="skill" title="Nginx">Nginx</div>
+    <div class="skill" title="Grafana">Grafana</div>
+    <div class="skill" title="Kubernetes">Kubernetes</div>
+    <div class="skill" title="Prometheus">Prometheus</div>
+  </div>
+</div>
+
+<!-- Android Card -->
+<div class="card" id="android-card">
+  <h2>Android</h2>
+  <div class="skills">
+    <div class="skill" title="Java">Java</div>
+    <div class="skill" title="Kotlin">Kotlin</div>
+    <div class="skill" title="Jetpack Compose">Jetpack Compose</div>
+    <div class="skill" title="XML">XML</div>
+    <div class="skill" title="Android Studio">Android Studio</div>
+  </div>
+</div>
+
+<script>
+  // Select all cards
+  const cards = document.querySelectorAll('.card');
+
+  // Function to handle mouse move over a card
+  function handleMouseMove(e) {
+    const card = e.currentTarget;
+    const rect = card.getBoundingClientRect();
+
+    const x = e.clientX - rect.left; // Mouse X within card
+    const y = e.clientY - rect.top;  // Mouse Y within card
+
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+
+    const deltaX = x - centerX; // Distance from center X
+    const deltaY = y - centerY; // Distance from center Y
+
+    const maxTilt = 15; // Max degrees of tilt
+    const rotateY = (deltaX / centerX) * maxTilt; // Tilt along Y axis
+    const rotateX = -(deltaY / centerY) * maxTilt; // Tilt along X axis (invert for natural feel)
+
+    // Apply transform
+    card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+  }
+
+  // Reset transform on mouse leave
+  function handleMouseLeave(e) {
+    e.currentTarget.style.transform = 'rotateX(0deg) rotateY(0deg)';
+  }
+
+  // Attach event listeners
+  cards.forEach(card => {
+    card.addEventListener('mousemove', handleMouseMove);
+    card.addEventListener('mouseleave', handleMouseLeave);
+  });
+</script>
+
+</body>
+</html>
